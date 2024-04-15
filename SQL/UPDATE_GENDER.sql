@@ -1,0 +1,21 @@
+create database DATA;
+USE DATA;
+CREATE TABLE GENDER(
+EMP_ID int,EMP_GENDER char(1)
+);
+
+insert into gender (EMP_ID,EMP_GENDER) VALUES
+(101,'M'),(102,'F'),(103,'M'),(104,'F');
+
+SELECT * FROM GENDER;
+
+UPDATE GENDER
+-- SET EMP_GENDER='M' WHERE EMP_GENDER='F' 
+-- EMP_GENDER='F' WHERE EMP_GENDER='M'
+SET EMP_GENDER = CASE
+WHEN EMP_GENDER='M' THEN 'F'
+WHEN EMP_GENDER='F' THEN 'M'
+END;
+
+set sql_safe_updates = 0;
+

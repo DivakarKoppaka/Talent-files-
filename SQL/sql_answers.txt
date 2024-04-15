@@ -1,0 +1,106 @@
+1. Preponed Departure Date:-
+	SELECT Booking_ID,flight_name,date_sub(flight_date,interval 5 day)
+	where flight_source!='Miami'
+	order by Booking_id desc;
+
+2.Customer Purchase Details:-
+	SELECT c.customer_id,c.customer_name,c.phone_no,p.purchase_date from customer_details as c
+	join purchase_details as p on c.customer_id=p.customer_id
+	where city!='Delhi'
+
+3.Customer With Email:-
+	SELECT c.cust_name,c.order_id,o.order_date from CUSTOMERS
+	JOIN ORDERS ON c.cust_id=o.order_id
+	where c.Email_id like"%gmail%"
+	order by c.order_id desc;
+
+4.Boat With Same Capacity:-
+	SELECT b1.Boat_ID,b2.Boat_name FROM Boat_Details AS b1
+	SELF JOIN  Boat_Details as b2 ON b1.Seat_capacity=b2.Seat_capacity
+	where b1.Boat_id!=b2.Boat_id
+	select b1.boat_id,b1.boat_name from boat_details b1 self join boat_details b2 on b1.seat_capacity = b2.seat_capacity
+          where b1.boat_id!=b2.boat_id
+	order by b1.boat_name;
+
+5.Product Category Details:-
+	SELECT p.product_name,p.category FROM Products p
+	join FEEDBACK as f ON p.product_id=f.product_id
+	where f.Rating_value<3
+	order by p.product_name;
+
+6.Member and Product Details:-
+	select f.fullname,f.Email,f.Member_id,p.product_id from MEMBERS AS f 
+	JOIN FEEDBACK  AS p ON f.member_id=p.member_id
+	where month(f.Date_of_birth)='1' or '12'
+	order by f.fullname desc;
+
+7.Date of Delivery:-
+	SELECT c.cust_name,c.Email_id,coalesec(c.Address,c.Phone_no) as Contact_Info FROM customers as c
+	JOIN ORDERS as o ON c.Cust_id=o.Cust_id
+	where o.order_id != o.Delivery_date
+	order by c.cust_name asc;
+
+8.Movie And Theatre Details:-
+	SELECT m.Movie_name,s.Theatre_id,m.Duration FROM MOVIE_MASTER AS m
+	join screening_master as s on m.movie_id=s.movie_id
+	where lower(m.language) !='hindi'
+	order by m.Movie_name desc;
+
+9.Chicago Flights:-
+	select f1.Flight_name ,f1.Flight_source From Flight_details f1
+	self join Flight_details f2 on f1.Flight_destination=f2.Flight_destination
+	where f1.Flight_source != f2.Flight_source and f1.Flight_destination!='Chicago'
+	order by f1.Flight_destination asc,f1.Flight_name asc;
+
+10.Member Details Based On Condition:-
+	select m.fullname from members as m
+	join feedback as f on m.member_id=f.member_id
+	where m.Email like '%gmail%' and m.address='Bangalore' and f.Rating_value<4
+	order by m.fullname desc;
+
+11.Specific Patient Address:-
+	select p.first_name,a.app_reason,a.app_time,b.bill_amount from patient as p
+	join appointment as a on p.Patient_id=a.patient_id
+	join BILL as b on a.app_number=b.app_number
+	where p.address like '%Avenue%' order by a.app_time;                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
+18.Most Number Of Years:-
+	select policy_id,policy_name from policy 
+	where policy_id in
+	(select policy_id from policy_enrollment
+	group by policy_id
+	having sum(no_of_years)=
+	(select sum(no_of_years) as max_count from policy_enrolment
+	group by policy_id
+	order by max_count desc limit 1))
+	oreder by policy_name asc;
+
+20.Patient from Same City:-
+	select p1.p_first_name,p2.city from patient p1
+	join patient as p2 on p1.city=p2.city
+	where p1.patient_id!=p2.patient_id
+
+21.Recent Subscriber:-
+	select customer_number from customer
+	where phone_number in 
+	(select phone_no from from subscription 
+	where recharge_date=
+	(select max(recharge_date) from subscription))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

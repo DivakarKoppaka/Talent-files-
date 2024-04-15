@@ -1,0 +1,1 @@
+select cust_id,cust_name,gender,marital_status,conact(cust_name,_,Gender,_marital_status) as UNIQUE_REF_STRING From customer
